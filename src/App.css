@@ -6,6 +6,7 @@
   padding: 0;
   background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .App-logo {
@@ -43,6 +44,23 @@
   margin-top: 10px;
 }
 
+.cta-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background: #ff5722;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.cta-button:hover {
+  transform: scale(1.1);
+  background: #e64a19;
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -55,7 +73,14 @@
   background: white;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  animation: slideIn 1.5s ease-in-out;
+  opacity: 0;
+  transform: translateY(100px) rotateX(30deg);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.App-section.visible {
+  opacity: 1;
+  transform: translateY(0) rotateX(0);
 }
 
 .App-section h2 {
@@ -108,6 +133,7 @@
   justify-content: center;
   gap: 20px;
   margin-top: 20px;
+  perspective: 1000px;
 }
 
 .gallery .image-container img {
@@ -120,8 +146,63 @@
 }
 
 .gallery .image-container img:hover {
-  transform: scale(1.1);
+  transform: rotateY(20deg) scale(1.1);
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.car {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  width: 50px;
+  height: 30px;
+  background: url('https://via.placeholder.com/50x30') no-repeat center/contain;
+  animation: moveRight 2s linear infinite;
+  z-index: 1000;
+}
+
+.car.left {
+  animation: moveLeft 2s linear infinite;
+}
+
+.statue-container {
+  position: fixed;
+  bottom: 0; /* Statue starts at the bottom */
+  right: 50px; /* Positioned to the right */
+  width: 120px;
+  height: 100vh; /* Full height to accommodate the rope */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 1000;
+}
+
+.statue {
+  position: relative;
+  width: 60px;
+  height: 120px;
+  background: linear-gradient(135deg, #ffcc00, #ff9900);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  animation: climbDown 2s linear infinite; /* Default animation */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.statue.left {
+  animation: climbUp 2s linear infinite; /* Animation for climbing up */
+}
+
+.rope {
+  position: absolute;
+  top: -100%; /* Rope starts from above the browser */
+  width: 8px;
+  height: 200vh; /* Long enough to cover the entire viewport */
+  background: #333;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes App-logo-spin {
@@ -161,5 +242,71 @@
   to {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes moveRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes moveLeft {
+  from {
+    transform: translateX(100vw);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes pullDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pullUp {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes climbDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px); /* Moves down slightly */
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes climbUp {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px); /* Moves up slightly */
+  }
+  100% {
+    transform: translateY(0);
   }
 }
